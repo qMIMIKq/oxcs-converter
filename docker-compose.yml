@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  app-converter:
+    image: m1m1kq/oxcs-converter
+    ports:
+      - 5001:5000
+    environment:
+      APP_ADDR: http://172.20.10.7:8182
