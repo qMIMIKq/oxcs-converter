@@ -36,8 +36,12 @@ def dxf_converter():
         requests.post(url=f'{config.get("app_addr")}/api/files/save-files',
                       files=resp)
         print('file sending back')
-        os.remove(os.path.join(save_path))
-        os.remove(f'{os.path.join(save_path)[:-4]}.png')
+        try:
+            os.remove(os.path.join(save_path))
+            os.remove(f'{os.path.join(save_path)[:-4]}.png')
+        except:
+            print('err')
+
         return Response(status=200)
 
 
@@ -58,10 +62,14 @@ def pdf_converter():
         requests.post(url=f'{config.get("app_addr")}/api/files/save-files',
                       files=resp)
         print('file sending back')
-        os.remove(os.path.join(save_path))
-        os.remove(f'{os.path.join(save_path)[:-4]}.png')
+        try:
+            os.remove(os.path.join(save_path))
+            os.remove(f'{os.path.join(save_path)[:-4]}.png')
+        except:
+            print('err')
         return Response(status=200)
 
+
 if __name__ == '__main__':
-    # app.run(host="0.0.0.0", port=5001)
-    serve(app, host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port=5001)
+    # serve(app, host="0.0.0.0", port=5000)
