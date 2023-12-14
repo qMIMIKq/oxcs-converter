@@ -26,7 +26,7 @@ def dxf_converter():
     file = request.files['file']
     print(file.filename)
     save_path = f'{FILES_DEST}{file.filename}'
-    file.save(save_path)
+    file.save(os.path.join(save_path))
     first.convert_dxf2img([save_path], img_format='.png')
     with open(f'{save_path[:-4]}.png', 'rb') as f:
         resp = {
@@ -35,8 +35,9 @@ def dxf_converter():
         print(f.name)
         requests.post(url=f'{config.get("app_addr")}/api/files/save-files',
                       files=resp)
-        # os.remove(save_path)
-        # os.remove(f'{save_path[:-4]}.png')
+        print('file sending back')
+        os.remove(os.path.join(save_path))
+        os.remove(f'{os.path.join(save_path)[:-4]}.png')
         return Response(status=200)
 
 
@@ -45,7 +46,7 @@ def pdf_converter():
     file = request.files['file']
     print(file.filename)
     save_path = f'{FILES_DEST}{file.filename}'
-    file.save(save_path)
+    file.save(os.path.join(save_path))
     pages = convert_from_path(save_path)
     pages[0].save(f'{save_path[:-4]}.png', 'PNG')
 
@@ -56,10 +57,10 @@ def pdf_converter():
 
         requests.post(url=f'{config.get("app_addr")}/api/files/save-files',
                       files=resp)
-        # os.remove(save_path)
-        # os.remove(f'{save_path[:-4]}.png')
+        print('file sending back')
+        os.remove(os.path.join(save_path))
+        os.remove(f'{os.path.join(save_path)[:-4]}.png')
         return Response(status=200)
-
 
 if __name__ == '__main__':
     # app.run(host="0.0.0.0", port=5001)

@@ -6,10 +6,10 @@ import matplotlib
 import matplotlib.pyplot as plt
 from ezdxf.addons.drawing import RenderContext, Frontend
 from ezdxf.addons.drawing.matplotlib import MatplotlibBackend
-from pdf2image import convert_from_path
 
 matplotlib.use('agg')
-
+fm = matplotlib.font_manager
+fm._get_fontconfig_fonts.cache_clear()
 
 class DXF2IMG(object):
     default_img_format = '.png'
