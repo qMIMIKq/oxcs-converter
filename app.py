@@ -1,7 +1,5 @@
-import logging
-import os
-
 import requests
+import os
 from flask import Flask, request, Response
 from pdf2image import convert_from_path
 from waitress import serve
@@ -41,7 +39,6 @@ def dxf_converter():
             os.remove(f'{os.path.join(save_path)[:-4]}.png')
         except:
             print('err')
-
         return Response(status=200)
 
 
@@ -52,7 +49,7 @@ def pdf_converter():
     save_path = f'{FILES_DEST}{file.filename}'
     file.save(os.path.join(save_path))
     pages = convert_from_path(save_path)
-    pages[0].save(f'{save_path[:-4]}.png', 'PNG')
+    pages[0].save(f'{save_path[:-4]}.png', 'png')
 
     with open(f'{save_path[:-4]}.png', 'rb') as f:
         resp = {
@@ -71,5 +68,5 @@ def pdf_converter():
 
 
 if __name__ == '__main__':
-    # app.run(host="0.0.0.0", port=5001)
-    serve(app, host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port=5001)
+    # serve(app, host="0.0.0.0", port=5000)

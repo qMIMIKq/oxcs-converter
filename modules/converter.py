@@ -13,7 +13,7 @@ fm._get_fontconfig_fonts.cache_clear()
 
 class DXF2IMG(object):
     default_img_format = '.png'
-    default_img_res = 300
+    default_img_res = 200
 
     def convert_dxf2img(self, names, img_format=default_img_format, img_res=default_img_res):
         for name in names:
