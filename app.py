@@ -1,5 +1,6 @@
-import requests
 import os
+
+import requests
 from flask import Flask, request, Response
 from pdf2image import convert_from_path
 from waitress import serve
@@ -24,8 +25,13 @@ def dxf_converter():
     file = request.files['file']
     print(file.filename)
     save_path = f'{FILES_DEST}{file.filename}'
+    print(save_path)
+
     file.save(os.path.join(save_path))
-    first.convert_dxf2img([save_path], img_format='.png')
+    try:
+        first.convert_dxf2img([save_path], img_format='.png')
+    except:
+        Response(status=500)
     with open(f'{save_path[:-4]}.png', 'rb') as f:
         resp = {
             "files": f

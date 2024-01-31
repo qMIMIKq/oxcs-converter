@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   app-converter:
-    image: m1m1kq/oxcs-converter
+    image: test
     ports:
       - 5001:5000
     environment:

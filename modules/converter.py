@@ -1,7 +1,9 @@
 import re
+import pylab as pl
 from logging import exception
 
 import ezdxf
+import os
 import matplotlib
 import matplotlib.pyplot as plt
 from ezdxf.addons.drawing import RenderContext, Frontend
@@ -10,6 +12,26 @@ from ezdxf.addons.drawing.matplotlib import MatplotlibBackend
 matplotlib.use('agg')
 fm = matplotlib.font_manager
 fm._get_fontconfig_fonts.cache_clear()
+
+#
+# font_dirs = ["./fonts"]
+# font_files = fm.findSystemFonts(fontpaths=font_dirs)
+#
+# for font_file in font_files:
+#     fm.fontManager.addfont(font_file)
+#
+# path = os.path.join(matplotlib.get_data_path(), "fonts/ttf/GOST_AU.ttf")
+# prop = fm.FontProperties(fname=path)
+# plt.rcParams['font.family'] = prop.get_name()
+# print(matplotlib.matplotlib_fname())
+#
+# la = pl.matplotlib.font_manager.FontManager()
+# lu = pl.matplotlib.font_manager.FontProperties(family='GOST_AU')
+# print(la.findfont(lu))
+
+# print(matplotlib.get_cachedir())
+
+# fm._rebuild()
 
 class DXF2IMG(object):
     default_img_format = '.png'
@@ -33,7 +55,9 @@ class DXF2IMG(object):
                 ctx.current_layout_properties.set_colors(bg='#F0F8FF')
                 out = MatplotlibBackend(ax)
                 Frontend(ctx, out).draw_layout(msp, finalize=True)
+                img_name = name[:-4]
 
-                img_name = re.findall("(\S+)\.", name)  # select the image name that is the same as the dxf file name
+                # img_name = re.findall("(\S+)\.", name)  # select the image name that is the same as the dxf file name
+                # print(img_name)
                 first_param = ''.join(img_name) + img_format  # concatenate list and string
                 fig.savefig(first_param, dpi=img_res)
